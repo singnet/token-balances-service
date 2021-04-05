@@ -1,0 +1,18 @@
+service: tokenbalance
+frameworkVersion: "2"
+
+provider:
+  name: aws
+  runtime: python3.8
+  lambdaHashingVersion: 20201221
+
+plugins:
+  - serverless-offline
+
+functions:
+  hellotest:
+    handler: balance/handlers/balance_handler.get_token_balance
+    events:
+      - httpApi:
+          path: /get-token-balance
+          method: post
