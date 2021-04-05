@@ -10,7 +10,7 @@ plugins:
   - serverless-offline
 
 functions:
-  hellotest:
+  get_token_balance:
     handler: balance/handlers/balance_handler.get_token_balance
     events:
       - httpApi:
