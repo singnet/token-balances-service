@@ -1,13 +1,15 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from common import DATABASE
+from common.config import DATABASE
 
 engine = create_engine(
     f"{DATABASE['DB_DRIVER']}://{DATABASE['DB_USER']}:"
     f"{DATABASE['DB_PASSWORD']}"
     f"@{DATABASE['DB_HOST']}:"
-    f"{DATABASE['DB_PORT']}/{DATABASE['DB_NAME']}", echo=False)
+    f"{DATABASE['DB_PORT']}/{DATABASE['DB_NAME']}",
+    echo=True,
+)
 
 Session = sessionmaker(bind=engine)
 default_session = Session()
@@ -27,7 +29,7 @@ class BaseRepository:
 
     def add_all_items(self, items):
         try:
-            self.session.add_all(items)
+            self.session.bulk_save_objects(items)
             self.session.commit()
         except Exception as e:
             self.session.commit()

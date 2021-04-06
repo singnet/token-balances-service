@@ -4,9 +4,7 @@
     "title": "GetTokenBalance",
     "type": "object",
     "properties": {
-      "data": {
-        "wallet_address": ""
-      }
+      "wallet_address": ""
     }
   },
   "TokenBalanceOutput": {
