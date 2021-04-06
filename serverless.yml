@@ -9,6 +9,18 @@ provider:
 plugins:
   - serverless-offline
 
+documentation:
+  models:
+    - name: "ErrorMessage"
+      contentType: "application/json"
+      schema: ${file(documentation/models/error.json)}
+    - name: "SubmitUserQuestion"
+      contentType: "application/json"
+      schema: ${file(documentation/models/submit_question.json):SubmitUserQuestion}
+    - name: "GetTokenBalance"
+      contentType: "application/json"
+      schema: ${file(documentation/models/token_balance.json):GetTokenBalance}
+
 functions:
   get_token_balance:
     handler: balance/handlers/balance_handler.get_token_balance
@@ -16,3 +28,43 @@ functions:
       - httpApi:
           path: /get-token-balance
           method: post
+          documentation:
+            summary: "Get token balance"
+            description: "Get token balance from the snapshot"
+            tags:
+              - "tokenbalance"
+            requestHeaders:
+              - name: "Content-Type"
+                description: "application/json"
+            methodResponses:
+              - statusCode: "200"
+                responseBody:
+                  description: "Tokenbalance Data"
+                responseModels:
+                  "application/json": "GetTokenBalance"
+              - statusCode: "500"
+                responseModels:
+                  "application/json": "ErrorMessage"
+  submit_user_question:
+    handler: balance/handlers/customer_handler.submit_question
+    events:
+      - httpApi:
+          path: /submit-question
+          method: post
+          documentation:
+            summary: "Submit user question"
+            description: "Submit user question"
+            tags:
+              - "tokenbalance"
+            requestHeaders:
+              - name: "Content-Type"
+                description: "application/json"
+            methodResponses:
+              - statusCode: "200"
+                responseBody:
+                  description: "Submit user question"
+                responseModels:
+                  "application/json": "SubmitUserQuestion"
+              - statusCode: "500"
+                responseModels:
+                  "application/json": "ErrorMessage"
