@@ -5,24 +5,24 @@ from sqlalchemy.sql import func
 Base = declarative_base()
 
 
-class Snapshots(Base):
+class BaseClassMixin(object):
+    id = Column("row_id", BIGINT, primary_key=True, autoincrement=True)
+    row_created = Column("row_created", DateTime,
+                         server_default=func.current_timestamp(), nullable=False)
+    row_updated = Column("row_updated", DateTime,
+                         server_default=func.current_timestamp(), server_onupdate=func.current_timestamp(), nullable=False)
+
+
+class Snapshots(BaseClassMixin, Base):
     __tablename__ = "snapshots"
-    id = Column("id", BIGINT, primary_key=True, autoincrement=True)
-    wallet_address = Column("wallet_address", VARCHAR(
-        50), nullable=False, index=True)
+    address = Column("address", VARCHAR(50), nullable=False, index=True)
     block_number = Column("block_number", BIGINT, nullable=False)
-    amount_held_in_cogs = Column(
-        "amount_held_in_cogs", DECIMAL(19, 8), nullable=False)
-    snap_shot_date = Column("snap_shot_date", Date, nullable=False)
-    created_at = Column("created_at", DateTime,
-                        server_default=func.current_timestamp(), nullable=False)
-    updated_at = Column("updated_at", DateTime,
-                        server_default=func.current_timestamp(), server_onupdate=func.current_timestamp(), nullable=False)
+    balance_in_cogs = Column("balance_in_cogs", DECIMAL(19, 8), nullable=False)
+    snapshot_date = Column("snapshot_date", Date, nullable=False)
 
 
-class UserAccessDetails(Base):
+class UserAccessDetails(BaseClassMixin, Base):
     __tablename__ = "user_access_details"
-    id = Column("id", BIGINT, primary_key=True, autoincrement=True)
     wallet_address = Column("wallet_address", VARCHAR(
         50), nullable=False, index=True)
     email = Column("email", VARCHAR(
@@ -30,27 +30,17 @@ class UserAccessDetails(Base):
     name = Column("name", VARCHAR(
         60), nullable=False)
     login_time = Column("login_time", DateTime, nullable=False)
-    created_at = Column("created_at", DateTime,
-                        server_default=func.current_timestamp(), nullable=False)
-    updated_at = Column("updated_at", DateTime,
-                        server_default=func.current_timestamp(), server_onupdate=func.current_timestamp(), nullable=False)
 
 
-class UserComments(Base):
+class UserComments(BaseClassMixin, Base):
     __tablename__ = "user_comments"
-    id = Column("id", BIGINT, primary_key=True, autoincrement=True)
     wallet_address = Column("wallet_address", VARCHAR(
         50), nullable=False, index=True)
     comment = Column("comment", TEXT, nullable=False)
-    created_at = Column("created_at", DateTime,
-                        server_default=func.current_timestamp(), nullable=False)
-    updated_at = Column("updated_at", DateTime,
-                        server_default=func.current_timestamp(), server_onupdate=func.current_timestamp(), nullable=False)
 
 
-class TransferInfo(Base):
+class TransferInfo(BaseClassMixin, Base):
     __tablename__ = "transfer_info"
-    id = Column("id", BIGINT, primary_key=True, autoincrement=True)
     wallet_address = Column("wallet_address", VARCHAR(
         50), nullable=False, index=True)
     transfer_time = Column("transfer_time", DateTime, nullable=False)
@@ -62,8 +52,3 @@ class TransferInfo(Base):
         "transfer_amount_in_cogs", DECIMAL(19, 8), nullable=False)
     transfer_status = Column(
         "transfer_status", VARCHAR(50), nullable=False)
-
-    created_at = Column("created_at", DateTime,
-                        server_default=func.current_timestamp(), nullable=False)
-    updated_at = Column("updated_at", DateTime,
-                        server_default=func.current_timestamp(), server_onupdate=func.current_timestamp(), nullable=False)
