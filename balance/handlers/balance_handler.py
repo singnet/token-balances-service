@@ -1,10 +1,28 @@
 from common.format_response import format_response
+from balance.services.balance_service import get_snapshot_balance
 
 
 def get_token_balance(event, context):
-    body = {
-        "address": "0x176133a958449C28930970989dB5fFFbEdd9F447",
-        "network": "Ropsten"
+
+    schema = {
+        "type": "object",
+        "properties": {
+            "address": {"type": "string"}
+        }
     }
 
-    return format_response(statusCode=200, message='Success', data=body)
+    inputs = event['body']
+
+    try:
+        validate(instance=inputs, schema=schema)
+        statusCode = 200
+        message = "Success"
+        body = get_snapshot_balance(inputs['address'])
+    except ValidationError as e:
+        statusCode = 400
+        message = "Validation failed"
+        body = {
+            "errors": e.message
+        }
+
+    return format_response(statusCode, message, data=body)
