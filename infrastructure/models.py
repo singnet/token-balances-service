@@ -34,7 +34,7 @@ class UserAccessDetails(BaseClassMixin, Base):
     __tablename__ = "user_access_details"
     wallet_address = Column("wallet_address", VARCHAR(50), nullable=False, index=True)
     email = Column("email", VARCHAR(120), nullable=False)
-    name = Column("name", VARCHAR(60), nullable=False)
+    name = Column("name", VARCHAR(60), nullable=True)
     login_time = Column("login_time", TIMESTAMP(), nullable=False)
 
 
