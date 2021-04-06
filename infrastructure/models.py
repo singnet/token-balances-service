@@ -27,7 +27,7 @@ class Snapshots(BaseClassMixin, Base):
     address = Column("address", VARCHAR(50), nullable=False, index=True)
     block_number = Column("block_number", BIGINT, nullable=False)
     balance_in_cogs = Column("balance_in_cogs", BIGINT, nullable=False)
-    snapshot_date = Column("snapshot_date", Date, nullable=False)
+    snapshot_date = Column("snapshot_date", TIMESTAMP(), nullable=False)
 
 
 class UserAccessDetails(BaseClassMixin, Base):

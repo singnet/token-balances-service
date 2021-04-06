@@ -1,0 +1,44 @@
+{
+  "GetTokenBalance": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "GetTokenBalance",
+    "type": "object",
+    "properties": {
+      "data": {
+        "wallet_address": ""
+      }
+    }
+  },
+  "TokenBalanceOutput": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "TokenBalanceOutput",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string"
+      },
+      "data": {
+        "statusCode": {
+          "type": "integer"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "type": "object"
+        }
+      },
+      "error": {
+        "type": "object",
+        "properties": {
+          "statusCode": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
