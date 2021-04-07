@@ -1,17 +1,18 @@
 import json
 
 from common.format_response import format_response
-from jsonschema import validate, ValidationError
+from jsonschema import validate, ValidationError, FormatChecker
 from balance.services.customer_service import submit_user_question
+from http import HTTPStatus
 
 
 def submit_question(event, context):
-    statusCode = 400
+    statusCode = HTTPStatus.BAD_REQUEST.value
 
     schema = {
         "type": "object",
         "properties": {
-            "email": {"type": "string"},
+            "email": {"type": "string", "format": "email"},
             "name": {"type": "string"},
             "wallet_address": {"type": "string"},
             "comment": {"type": "string"},
@@ -22,10 +23,10 @@ def submit_question(event, context):
     try:
         inputs = event["body"] or None
         if inputs is None:
-            message = "Bad request"
+            message = HTTPStatus.BAD_REQUEST.phrase
         else:
             payload = json.loads(inputs)
-            validate(instance=payload, schema=schema)
+            validate(instance=payload, schema=schema, format_checker=FormatChecker())
 
             email = payload["email"]
             wallet_address = payload["wallet_address"]

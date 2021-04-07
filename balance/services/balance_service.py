@@ -1,4 +1,5 @@
 from infrastructure.repository.snapshot_repository import Snapshot
+from http import HTTPStatus
 
 snapshot = Snapshot()
 
@@ -23,11 +24,11 @@ def find_snapshot_by_address(address):
                 "transaction_hash": transfer_details.transfer_transaction,
             }
 
-        message = "Success"
-        statusCode = 200
+        message = HTTPStatus.OK.phrase
+        statusCode = HTTPStatus.OK.value
     else:
         data = None
-        statusCode = 404
+        statusCode = HTTPStatus.BAD_REQUEST.value
         message = "Address not found in snapshot"
 
     return statusCode, message, data

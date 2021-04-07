@@ -3,12 +3,13 @@ import json
 from common.format_response import format_response
 from jsonschema import validate, ValidationError
 from balance.services.balance_service import find_snapshot_by_address
+from http import HTTPStatus
 
 
 def get_token_balance(event, context):
 
     data = None
-    statusCode = 400
+    statusCode = HTTPStatus.BAD_REQUEST.value
 
     schema = {
         "type": "object",
@@ -19,7 +20,7 @@ def get_token_balance(event, context):
     try:
         inputs = event["body"] or None
         if inputs is None:
-            message = "Bad request"
+            message = HTTPStatus.BAD_REQUEST.phrase
         else:
             payload = json.loads(inputs)
             validate(instance=payload, schema=schema)
