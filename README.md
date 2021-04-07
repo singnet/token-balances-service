@@ -2,8 +2,23 @@
 
 Backend for the token balances DApp
 
-# DB Schema
+Install the dependencies and devDependencies and start the serve locally.
 
-For populating the Database table run the command
+```sh
+npm install -g serverless # Install serverless
+npm install --save-dev
+```
 
-### `alembic upgrade head`
+Configure database from `common/config.py`
+
+```sh
+pip3 install -r requirements.txt
+alembic upgrade head # Sync database tables
+```
+
+## Requirements
+
+| Language     | Min Version                       |
+| ------------ | --------------------------------- |
+| Python 3.8   | https://www.python.org/downloads/ |
+| Node JS 12.X | https://nodejs.org/en/            |
