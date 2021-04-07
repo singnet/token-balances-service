@@ -18,7 +18,7 @@ alembic upgrade head # Sync database tables
 
 ## Requirements
 
-| Language     | Min Version                       |
+| Language     | Download                          |
 | ------------ | --------------------------------- |
 | Python 3.8   | https://www.python.org/downloads/ |
 | Node JS 12.X | https://nodejs.org/en/            |
