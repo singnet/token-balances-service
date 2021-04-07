@@ -16,6 +16,12 @@ pip3 install -r requirements.txt
 alembic upgrade head # Sync database tables
 ```
 
+### Start the service
+
+```sh
+sls offline start
+```
+
 ## Requirements
 
 | Language     | Download                          |
