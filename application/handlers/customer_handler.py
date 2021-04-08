@@ -1,8 +1,8 @@
 import json
 
-from common.format_response import format_response
+from utils.format_response import format_response
 from jsonschema import validate, ValidationError, FormatChecker
-from balance.services.customer_service import submit_user_question
+from application.services.customer_service import submit_user_question
 from http import HTTPStatus
 
 

@@ -3,7 +3,7 @@ from logging.config import fileConfig
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 from infrastructure.models import Base
-from common.config import DATABASE
+from config import DATABASE
 
 from alembic import context
 
@@ -11,9 +11,11 @@ from alembic import context
 # access to the values within the .ini file in use.
 config = context.config
 
-MYSQL_CONNECTION_STRING = f"mysql+pymysql://{DATABASE['DB_USER']}:{DATABASE['DB_PASSWORD']}" \
-                          f"@{DATABASE['DB_HOST']}:{DATABASE['DB_PORT']}/{DATABASE['DB_NAME']}"
-config.set_main_option('sqlalchemy.url', MYSQL_CONNECTION_STRING)
+MYSQL_CONNECTION_STRING = (
+    f"mysql+pymysql://{DATABASE['DB_USER']}:{DATABASE['DB_PASSWORD']}"
+    f"@{DATABASE['DB_HOST']}:{DATABASE['DB_PORT']}/{DATABASE['DB_NAME']}"
+)
+config.set_main_option("sqlalchemy.url", MYSQL_CONNECTION_STRING)
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
 fileConfig(config.config_file_name)
@@ -68,9 +70,7 @@ def run_migrations_online():
     )
 
     with connectable.connect() as connection:
-        context.configure(
-            connection=connection, target_metadata=target_metadata
-        )
+        context.configure(connection=connection, target_metadata=target_metadata)
 
         with context.begin_transaction():
             context.run_migrations()

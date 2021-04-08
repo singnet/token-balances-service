@@ -75,7 +75,7 @@ package:
 functions:
   get_token_balance:
     warmup: true
-    handler: balance/handlers/balance_handler.get_token_balance
+    handler: application/handlers/balance_handler.get_token_balance
     role: ${file(./config.${self:provider.stage}.json):ROLE}
     vpc:
       securityGroupIds:
@@ -117,7 +117,7 @@ functions:
                   "application/json": "ErrorMessage"
   submit_user_question:
     warmup: true
-    handler: balance/handlers/customer_handler.submit_question
+    handler: application/handlers/customer_handler.submit_question
     role: ${file(./config.${self:provider.stage}.json):ROLE}
     vpc:
       securityGroupIds:

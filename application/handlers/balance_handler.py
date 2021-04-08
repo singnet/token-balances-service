@@ -1,8 +1,8 @@
 import json
 
-from common.format_response import format_response
+from utils.format_response import format_response
 from jsonschema import validate, ValidationError
-from balance.services.balance_service import find_snapshot_by_address
+from application.services.balance_service import find_snapshot_by_address
 from http import HTTPStatus
 
 

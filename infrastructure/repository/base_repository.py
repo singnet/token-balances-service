@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from common.config import DATABASE
+from config import DATABASE
 
 engine = create_engine(
     f"{DATABASE['DB_DRIVER']}://{DATABASE['DB_USER']}:"
