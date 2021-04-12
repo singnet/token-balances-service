@@ -7,7 +7,6 @@ from http import HTTPStatus
 
 
 def get_token_balance(event, context):
-
     data = None
     statusCode = HTTPStatus.BAD_REQUEST.value
 
