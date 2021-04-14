@@ -2,7 +2,7 @@
 
 Backend for the token balances DApp
 
-Install the dependencies and devDependencies and start the serve locally.
+Install the dependencies and devDependencies and start the service locally.
 
 ```sh
 npm install -g serverless # Install serverless

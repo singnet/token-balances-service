@@ -85,7 +85,7 @@ functions:
         - ${file(./config.${self:provider.stage}.json):VPC1}
         - ${file(./config.${self:provider.stage}.json):VPC2}
     events:
-      - httpApi:
+      - http:
           path: /get-token-balance
           method: post
           cors:
