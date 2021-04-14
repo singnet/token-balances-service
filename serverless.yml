@@ -44,9 +44,15 @@ documentation:
     - name: "SubmitUserQuestion"
       contentType: "application/json"
       schema: ${file(documentation/models/submit_question.json):SubmitUserQuestion}
+    - name: "SubmitUserQuestionOutput"
+      contentType: "application/json"
+      schema: ${file(documentation/models/submit_question.json):SubmitUserQuestionOutput}
     - name: "GetTokenBalance"
       contentType: "application/json"
       schema: ${file(documentation/models/token_balance.json):GetTokenBalance}
+    - name: "TokenBalanceOutput"
+      contentType: "application/json"
+      schema: ${file(documentation/models/token_balance.json):TokenBalanceOutput}
 
 package:
   exclude:
@@ -106,12 +112,14 @@ functions:
             requestHeaders:
               - name: "Content-Type"
                 description: "application/json"
+            requestModels:
+              "application/json": "GetTokenBalance"
             methodResponses:
               - statusCode: "200"
                 responseBody:
                   description: "Tokenbalance Data"
                 responseModels:
-                  "application/json": "GetTokenBalance"
+                  "application/json": "TokenBalanceOutput"
               - statusCode: "500"
                 responseModels:
                   "application/json": "ErrorMessage"
@@ -127,7 +135,7 @@ functions:
         - ${file(./config.${self:provider.stage}.json):VPC1}
         - ${file(./config.${self:provider.stage}.json):VPC2}
     events:
-      - httpApi:
+      - http:
           path: /submit-question
           method: post
           cors:
@@ -148,12 +156,14 @@ functions:
             requestHeaders:
               - name: "Content-Type"
                 description: "application/json"
+            requestModels:
+              "application/json": "SubmitUserQuestion"
             methodResponses:
               - statusCode: "200"
                 responseBody:
                   description: "Submit user question"
                 responseModels:
-                  "application/json": "SubmitUserQuestion"
+                  "application/json": "SubmitUserQuestionOutput"
               - statusCode: "500"
                 responseModels:
                   "application/json": "ErrorMessage"
