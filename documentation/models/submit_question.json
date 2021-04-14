@@ -5,29 +5,30 @@
     "type": "object",
     "properties": {
       "data": {
-        "name": "",
-        "email": "",
-        "wallet_address": "",
-        "comment": ""
+        "wallet_address": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "comment": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
       }
     }
   },
-  "SubmitQuestionOutput": {
+  "SubmitUserQuestionOutput": {
     "$schema": "http://json-schema.org/draft-04/schema#",
-    "title": "SubmitQuestionOutput",
+    "title": "SubmitUserQuestionOutput",
     "type": "object",
     "properties": {
       "status": {
         "type": "string"
       },
-      "data": {
-        "statusCode": {
-          "type": "integer"
-        },
-        "message": {
-          "type": "string"
-        }
-      },
+      "data": {},
       "error": {
         "type": "object",
         "properties": {
