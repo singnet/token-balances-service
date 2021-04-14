@@ -23,7 +23,7 @@ class AuditClass(object):
 
 
 class Snapshots(AuditClass, Base):
-    __tablename__ = "snapshots"
+    __tablename__ = "token_snapshots"
     address = Column("address", VARCHAR(50), nullable=False, index=True)
     block_number = Column("block_number", BIGINT, nullable=False)
     balance_in_cogs = Column("balance_in_cogs", BIGINT, nullable=False)

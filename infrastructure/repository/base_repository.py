@@ -8,7 +8,7 @@ engine = create_engine(
     f"{DATABASE['DB_PASSWORD']}"
     f"@{DATABASE['DB_HOST']}:"
     f"{DATABASE['DB_PORT']}/{DATABASE['DB_NAME']}",
-    echo=True,
+    echo=False,
 )
 
 Session = sessionmaker(bind=engine)
