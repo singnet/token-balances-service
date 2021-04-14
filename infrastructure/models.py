@@ -1,4 +1,4 @@
-from sqlalchemy import BIGINT, VARCHAR, Column, TEXT, INT, text
+from sqlalchemy import BIGINT, VARCHAR, Column, TEXT, INT, text, UniqueConstraint
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.dialects.mysql import TIMESTAMP
 from sqlalchemy.sql import func
@@ -6,7 +6,7 @@ from sqlalchemy.sql import func
 Base = declarative_base()
 
 
-class BaseClassMixin(object):
+class AuditClass(object):
     id = Column("row_id", BIGINT, primary_key=True, autoincrement=True)
     row_created = Column(
         "row_created",
@@ -22,15 +22,16 @@ class BaseClassMixin(object):
     )
 
 
-class Snapshots(BaseClassMixin, Base):
+class Snapshots(AuditClass, Base):
     __tablename__ = "snapshots"
     address = Column("address", VARCHAR(50), nullable=False, index=True)
     block_number = Column("block_number", BIGINT, nullable=False)
     balance_in_cogs = Column("balance_in_cogs", BIGINT, nullable=False)
     snapshot_date = Column("snapshot_date", TIMESTAMP(), nullable=False)
+    UniqueConstraint(address, block_number, name="uq_sn")
 
 
-class UserAccessDetails(BaseClassMixin, Base):
+class UserAccessDetails(AuditClass, Base):
     __tablename__ = "user_access_details"
     wallet_address = Column("wallet_address", VARCHAR(50), nullable=False, index=True)
     email = Column("email", VARCHAR(120), nullable=False)
@@ -38,13 +39,13 @@ class UserAccessDetails(BaseClassMixin, Base):
     login_time = Column("login_time", TIMESTAMP(), nullable=False)
 
 
-class UserComments(BaseClassMixin, Base):
+class UserComments(AuditClass, Base):
     __tablename__ = "user_comments"
     wallet_address = Column("wallet_address", VARCHAR(50), nullable=False, index=True)
     comment = Column("comment", TEXT, nullable=False)
 
 
-class TransferInfo(BaseClassMixin, Base):
+class TransferInfo(AuditClass, Base):
     __tablename__ = "transfer_info"
     wallet_address = Column("wallet_address", VARCHAR(50), nullable=False, index=True)
     transfer_time = Column("transfer_time", TIMESTAMP(), nullable=False)

@@ -2,7 +2,7 @@ import json
 
 from utils.format_response import format_response
 from jsonschema import validate, ValidationError
-from application.services.balance_service import find_snapshot_by_address
+from application.services.balance_service import get_snapshot_by_address
 from http import HTTPStatus
 
 
@@ -23,7 +23,7 @@ def get_token_balance(event, context):
         else:
             payload = json.loads(inputs)
             validate(instance=payload, schema=schema)
-            statusCode, message, data = find_snapshot_by_address(
+            statusCode, message, data = get_snapshot_by_address(
                 payload["wallet_address"]
             )
     except ValidationError as e:

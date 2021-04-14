@@ -27,15 +27,7 @@ def submit_question(event, context):
         else:
             payload = json.loads(inputs)
             validate(instance=payload, schema=schema, format_checker=FormatChecker())
-
-            email = payload["email"]
-            wallet_address = payload["wallet_address"]
-            comment = payload["comment"]
-            name = payload.get("name") or None
-
-            statusCode, message = submit_user_question(
-                wallet_address, email, comment, name
-            )
+            statusCode, message = submit_user_question(payload)
     except ValidationError as e:
         message = e.message
 
