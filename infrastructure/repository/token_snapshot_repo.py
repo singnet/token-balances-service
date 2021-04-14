@@ -13,7 +13,9 @@ class TokenSnapshotRepo(BaseRepository):
                 .filter(Snapshots.address == address)
                 .first()
             )
+            self.session.commit()
         except exc.SQLAlchemyError as e:
+            self.session.rollback()
             raise (e)
 
         if result is not None:
@@ -31,7 +33,9 @@ class TokenSnapshotRepo(BaseRepository):
                 .filter(TransferInfo.wallet_address == address)
                 .first()
             )
+            self.session.commit()
         except exc.SQLAlchemyError as e:
+            self.session.rollback()
             raise (e)
 
         return result or None
