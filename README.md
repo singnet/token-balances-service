@@ -9,7 +9,7 @@ npm install -g serverless # Install serverless
 npm install --save-dev
 ```
 
-Configure database from `common/config.py`
+Configure database from `config.py`
 
 ```sh
 pip3 install -r requirements.txt
