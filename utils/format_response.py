@@ -4,7 +4,7 @@ from http import HTTPStatus
 
 def format_response(statusCode, message, data=None):
     if HTTPStatus.OK.value >= statusCode and statusCode <= HTTPStatus.ALREADY_REPORTED.value:
-        body = {"statusCode": statusCode, "data": data, "message": message}
+        body = {"status": statusCode, "data": data, "message": message}
     else:
         body = {
             "error": {"code": 0, "message": message},
