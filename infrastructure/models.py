@@ -28,7 +28,7 @@ class Snapshots(AuditClass, Base):
     block_number = Column("block_number", BIGINT, nullable=False)
     balance_in_cogs = Column("balance_in_cogs", BIGINT, nullable=False)
     snapshot_date = Column("snapshot_date", TIMESTAMP(), nullable=False)
-    UniqueConstraint(address, block_number, name="uq_sn")
+    UniqueConstraint(address, name="uq_sn")
 
 
 class UserAccessDetails(AuditClass, Base):
