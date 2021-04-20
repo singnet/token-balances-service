@@ -24,10 +24,11 @@ class AuditClass(object):
 
 class Snapshots(AuditClass, Base):
     __tablename__ = "token_snapshots"
-    address = Column("address", VARCHAR(50), nullable=False, index=True)
+    address = Column("wallet_address", VARCHAR(50), nullable=False, index=True)
     block_number = Column("block_number", BIGINT, nullable=False)
     balance_in_cogs = Column("balance_in_cogs", BIGINT, nullable=False)
     snapshot_date = Column("snapshot_date", TIMESTAMP(), nullable=False)
+    address_type = Column("address_type", INT, default=1)
     UniqueConstraint(address, name="uq_sn")
 
 
