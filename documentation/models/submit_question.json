@@ -1,0 +1,45 @@
+{
+  "SubmitUserQuestion": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "SubmitUserQuestion",
+    "type": "object",
+    "properties": {
+      "data": {
+        "wallet_address": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "comment": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "SubmitUserQuestionOutput": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "SubmitUserQuestionOutput",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string"
+      },
+      "data": {},
+      "error": {
+        "type": "object",
+        "properties": {
+          "statusCode": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
