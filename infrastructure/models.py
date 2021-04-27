@@ -54,4 +54,4 @@ class TransferInfo(AuditClass, Base):
     transfer_transaction = Column("transfer_transaction", VARCHAR(255), nullable=False)
     transfer_amount_in_cogs = Column("transfer_amount_in_cogs", BIGINT, nullable=False)
     transfer_status = Column("transfer_status", VARCHAR(50), nullable=False)
-    is_contract = Column("is_contract", BIT, nullable=False)
+    is_contract = Column("is_contract", BIT, default=1)
