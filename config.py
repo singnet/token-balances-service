@@ -7,4 +7,4 @@ DATABASE = {
     "DB_PORT": "",
 }
 
-HTTP_PROVIDER = "https://infura.infura.io/v3/a1b96bbe33004a9d9039ec41d7a8677c"
+HTTP_PROVIDER = "https://infura.infura.io/v3/projectId"
