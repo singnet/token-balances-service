@@ -1,6 +1,6 @@
-from sqlalchemy import BIGINT, VARCHAR, Column, TEXT, INT, text, UniqueConstraint
+from sqlalchemy import BIGINT, VARCHAR, Column, TEXT, text, UniqueConstraint
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.dialects.mysql import TIMESTAMP
+from sqlalchemy.dialects.mysql import TIMESTAMP, BIT
 from sqlalchemy.sql import func
 
 Base = declarative_base()
@@ -28,7 +28,7 @@ class Snapshots(AuditClass, Base):
     block_number = Column("block_number", BIGINT, nullable=False)
     balance_in_cogs = Column("balance_in_cogs", BIGINT, nullable=False)
     snapshot_date = Column("snapshot_date", TIMESTAMP(), nullable=False)
-    address_type = Column("address_type", INT, default=1)
+    is_contract = Column("is_contract", BIT, default=1)
     UniqueConstraint(address, name="uq_sn")
 
 
@@ -54,4 +54,4 @@ class TransferInfo(AuditClass, Base):
     transfer_transaction = Column("transfer_transaction", VARCHAR(255), nullable=False)
     transfer_amount_in_cogs = Column("transfer_amount_in_cogs", BIGINT, nullable=False)
     transfer_status = Column("transfer_status", VARCHAR(50), nullable=False)
-    address_type = Column("address_type", INT, nullable=False)
+    is_contract = Column("is_contract", BIT, default=1)
