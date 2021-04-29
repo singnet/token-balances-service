@@ -16,10 +16,9 @@ def submit_question(event, context):
             "name": {"type": "string"},
             "wallet_address": {"type": "string"},
             "comment": {"type": "string"},
-            "block_number": {"type": "string", "format": "number"},
-            "message": {"type": "string"}
+            "block_number": {"type": "string", "format": "number"}
         },
-        "required": ["email", "wallet_address", "comment", "message", "block_number"],
+        "required": ["email", "wallet_address", "comment", "block_number"],
     }
 
     try:
