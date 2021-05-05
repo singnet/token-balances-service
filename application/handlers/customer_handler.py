@@ -16,18 +16,21 @@ def submit_question(event, context):
             "name": {"type": "string"},
             "wallet_address": {"type": "string"},
             "comment": {"type": "string"},
+            "block_number": {"type": "string", "format": "number"}
         },
-        "required": ["email", "wallet_address", "comment"],
+        "required": ["email", "wallet_address", "comment", "block_number"],
     }
 
     try:
         inputs = event["body"] or None
-        if inputs is None:
+        headers = event["headers"]
+        signature = headers.get('Authorization') or None
+        if inputs is None or signature is None:
             message = HTTPStatus.BAD_REQUEST.phrase
         else:
             payload = json.loads(inputs)
             validate(instance=payload, schema=schema, format_checker=FormatChecker())
-            statusCode, message = submit_user_question(payload)
+            statusCode, message = submit_user_question(payload, signature)
     except ValidationError as e:
         message = e.message
 
