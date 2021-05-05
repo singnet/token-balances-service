@@ -7,6 +7,8 @@ from sqlalchemy import exc
 class TokenSnapshotRepo(BaseRepository):
     def get_token_balance(self, address):
 
+        address = address.lower()
+
         try:
             result = (
                 self.session.query(Snapshots)
