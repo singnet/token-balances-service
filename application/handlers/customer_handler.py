@@ -16,7 +16,7 @@ def submit_question(event, context):
             "name": {"type": "string"},
             "wallet_address": {"type": "string"},
             "comment": {"type": "string"},
-            "block_number": {"type": "string", "format": "number"}
+            "block_number": {"type": "number"},
         },
         "required": ["email", "wallet_address", "comment", "block_number"],
     }
@@ -24,7 +24,7 @@ def submit_question(event, context):
     try:
         inputs = event["body"] or None
         headers = event["headers"]
-        signature = headers.get('Authorization') or None
+        signature = headers.get("Authorization") or None
         if inputs is None or signature is None:
             message = HTTPStatus.BAD_REQUEST.phrase
         else:
