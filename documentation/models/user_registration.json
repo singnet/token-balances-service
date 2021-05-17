@@ -1,0 +1,42 @@
+{
+  "UserRegistration": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "UserRegistration",
+    "type": "object",
+    "properties": {
+      "data": {
+        "wallet_address": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "block_number": {
+          "type": "integer"
+        }
+      }
+    }
+  },
+  "UserRegistrationOutput": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "UserRegistrationOutput",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string"
+      },
+      "data": {},
+      "error": {
+        "type": "object",
+        "properties": {
+          "statusCode": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
