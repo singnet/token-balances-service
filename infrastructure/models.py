@@ -29,6 +29,8 @@ class Snapshots(AuditClass, Base):
     balance_in_cogs = Column("balance_in_cogs", BIGINT, nullable=False)
     snapshot_date = Column("snapshot_date", TIMESTAMP(), nullable=False)
     is_contract = Column("is_contract", BIT, default=1)
+    is_considered = Column("is_considered", BIT, default=0)
+    comment = Column("comment", VARCHAR(256))
     UniqueConstraint(address, name="uq_sn")
 
 
