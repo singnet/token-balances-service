@@ -57,11 +57,3 @@ class TransferInfo(AuditClass, Base):
     transfer_amount_in_cogs = Column("transfer_amount_in_cogs", BIGINT, nullable=False)
     transfer_status = Column("transfer_status", VARCHAR(50), nullable=False)
     is_contract = Column("is_contract", BIT, default=1)
-
-
-class User(AuditClass, Base):
-    __tablename__ = "users"
-    wallet_address = Column("wallet_address", VARCHAR(50), nullable=False, unique=True)
-    signature = Column("signature", VARCHAR(255), nullable=False)
-    email = Column("email", VARCHAR(255), nullable=True)
-    is_registered = Column("is_registered", BIT, default=0)
