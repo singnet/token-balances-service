@@ -6,3 +6,6 @@ DATABASE = {
     "DB_NAME": "",
     "DB_PORT": "",
 }
+
+HTTP_PROVIDER = "https://ropsten.infura.io"
+BLOCK_THRESHOLD = 5
