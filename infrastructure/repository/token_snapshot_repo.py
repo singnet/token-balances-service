@@ -33,6 +33,7 @@ class TokenSnapshotRepo(BaseRepository):
             result = (
                 self.session.query(TransferInfo)
                 .filter(TransferInfo.wallet_address == address)
+                .filter(TransferInfo.transfer_status == "SUCCESS")
                 .first()
             )
             self.session.commit()
