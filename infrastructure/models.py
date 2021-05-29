@@ -57,3 +57,11 @@ class TransferInfo(AuditClass, Base):
     transfer_amount_in_cogs = Column("transfer_amount_in_cogs", BIGINT, nullable=False)
     transfer_status = Column("transfer_status", VARCHAR(50), nullable=False)
     is_contract = Column("is_contract", BIT, default=1)
+
+
+class StakingTokenSnapshot(AuditClass, Base):
+    __tablename__ = "staking_token_snapshots"
+    window_id = Column("window_id", VARCHAR(50), nullable=False, index=True)
+    staker_address = Column("staker_address", VARCHAR(50), nullable=False)
+    balance_in_cogs = Column("balance_in_cogs", BIGINT, nullable=False)
+    comment = Column("comment", VARCHAR(256), nullable=False)

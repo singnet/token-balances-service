@@ -1,5 +1,5 @@
 from infrastructure.repository.base_repository import BaseRepository
-from infrastructure.models import Snapshots, TransferInfo
+from infrastructure.models import Snapshots, TransferInfo, StakingTokenSnapshot
 from domain.factory.token_snapshot_factory import TokenSnapshotFactory
 from sqlalchemy import exc
 
@@ -22,11 +22,26 @@ class TokenSnapshotRepo(BaseRepository):
 
         if result is not None:
             transfer_details = self.get_transfer_status(address)
+            staker_details = self.get_staker_status(address)
             return TokenSnapshotFactory.convert_token_snapshot_db_to_entity_model(
-                result, transfer_details
+                result, transfer_details, staker_details
             ).to_response()
         else:
             return None
+
+    def get_staker_status(self, address):
+        try:
+            result = (
+                self.session.query(StakingTokenSnapshot)
+                .filter(StakingTokenSnapshot.staker_address == address)
+                .first()
+            )
+            self.session.commit()
+        except exc.SQLAlchemyError as e:
+            self.session.rollback()
+            raise (e)
+
+        return result or None
 
     def get_transfer_status(self, address):
         try:
