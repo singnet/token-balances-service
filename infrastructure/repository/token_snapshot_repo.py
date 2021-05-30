@@ -12,8 +12,8 @@ class TokenSnapshotRepo(BaseRepository):
         try:
             result = (
                 self.session.query(Snapshots)
-                .filter(Snapshots.address == address)
-                .first()
+                    .filter(Snapshots.address == address)
+                    .first()
             )
             self.session.commit()
         except exc.SQLAlchemyError as e:
@@ -22,19 +22,25 @@ class TokenSnapshotRepo(BaseRepository):
 
         if result is not None:
             transfer_details = self.get_transfer_status(address)
-            staker_details = self.get_staker_status(address)
-            return TokenSnapshotFactory.convert_token_snapshot_db_to_entity_model(
-                result, transfer_details, staker_details
-            ).to_response()
+            token_snapshot = TokenSnapshotFactory.convert_token_snapshot_db_to_entity_model(result.address,
+                                                                                            result.balance_in_cogs,
+                                                                                            result.block_number,
+                                                                                            result.snapshot_date)
+            token_snapshot.token_transfer_details = transfer_details
         else:
-            return None
+            token_snapshot = TokenSnapshotFactory.convert_token_snapshot_db_to_entity_model(address, 0, 0, '')
+
+        staker_details = self.get_staker_status(address)
+        token_snapshot.staker_transfer_details = staker_details
+
+        return token_snapshot.to_response()
 
     def get_staker_status(self, address):
         try:
             result = (
                 self.session.query(StakingTokenSnapshot)
-                .filter(StakingTokenSnapshot.staker_address == address)
-                .first()
+                    .filter(StakingTokenSnapshot.staker_address == address)
+                    .first()
             )
             self.session.commit()
         except exc.SQLAlchemyError as e:
@@ -47,9 +53,9 @@ class TokenSnapshotRepo(BaseRepository):
         try:
             result = (
                 self.session.query(TransferInfo)
-                .filter(TransferInfo.wallet_address == address)
-                .filter(TransferInfo.transfer_status == "SUCCESS")
-                .first()
+                    .filter(TransferInfo.wallet_address == address)
+                    .filter(TransferInfo.transfer_status == "SUCCESS")
+                    .first()
             )
             self.session.commit()
         except exc.SQLAlchemyError as e:
