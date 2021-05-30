@@ -1,6 +1,6 @@
 class TokenSnapshot:
     def __init__(
-            self, address, balance_in_cogs, block_no, snapshot_date, token_transfer_details=None):
+            self, address, balance_in_cogs, block_no, snapshot_date):
         self.address = address
         self.balance_in_cogs = balance_in_cogs
         self.block_no = block_no
