@@ -10,7 +10,7 @@ class TokenSnapshotRepo(BaseRepository):
         address = address.lower()
 
         try:
-            result = (
+            snapshot_details = (
                 self.session.query(Snapshots)
                 .filter(Snapshots.address == address)
                 .first()
@@ -20,14 +20,11 @@ class TokenSnapshotRepo(BaseRepository):
             self.session.rollback()
             raise (e)
 
-        if result is not None:
-            transfer_details = self.get_transfer_status(address)
-            staker_details = self.get_staker_status(address)
-            return TokenSnapshotFactory.convert_token_snapshot_db_to_entity_model(
-                result, transfer_details, staker_details
-            ).to_response()
-        else:
-            return None
+        staker_details = self.get_staker_status(address)
+        transfer_details = self.get_transfer_status(address)
+        return TokenSnapshotFactory.convert_token_snapshot_db_to_entity_model(
+            snapshot_details, transfer_details, staker_details
+        ).to_response()
 
     def get_staker_status(self, address):
         try:
