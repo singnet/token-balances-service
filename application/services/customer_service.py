@@ -21,7 +21,7 @@ def submit_user_question(payload, signature):
         latest_block = web3_object.eth.get_block('latest')
         block_difference = abs(int(latest_block.number) - int(block_number))
 
-        if block_difference <= BLOCK_THRESHOLD and public_address == wallet_address:
+        if block_difference <= BLOCK_THRESHOLD and public_address.lower() == wallet_address.lower():
             CustomerComments().submit_comment(wallet_address, comment, email, name)
             statusCode = HTTPStatus.OK.value
             message = HTTPStatus.OK.phrase
