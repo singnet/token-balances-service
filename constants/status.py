@@ -10,6 +10,7 @@ class SnapshotHistoryStatus(Enum):
 class SnapshotType(Enum):
     TOKEN = "token"
     ADA = "ada"
+    STAKING = "staking"
 
 
 class CreatedBy(Enum):

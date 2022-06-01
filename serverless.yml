@@ -28,6 +28,28 @@ custom:
     automatic: true
     includeLayers: true
     number: 5
+  defaultLayers:
+    - ${file(./config.${self:provider.stage}.json):MplaceCommonCode_Layer}
+    - ${file(./config.${self:provider.stage}.json):MplaceCommonPythonLib_Layer}
+    - ${file(./config.${self:provider.stage}.json):MplacePythonWeb3AndGrpc_Layer}
+    - ${file(./config.${self:provider.stage}.json):SnetContract}
+  defaultVpc:
+    securityGroupIds:
+      - ${file(./config.${self:provider.stage}.json):SG1}
+      - ${file(./config.${self:provider.stage}.json):SG2}
+    subnetIds:
+      - ${file(./config.${self:provider.stage}.json):VPC1}
+      - ${file(./config.${self:provider.stage}.json):VPC2}
+  defaultCors:
+    origin: ${file(./config.${self:provider.stage}.json):ORIGIN}
+    headers:
+      - Content-Type
+      - X-Amz-Date
+      - Authorization
+      - X-Api-Key
+      - X-Amz-Security-Token
+      - X-Amz-User-Agent
+      - x-requested-with
 
 plugins:
   - serverless-offline
@@ -83,27 +105,12 @@ functions:
     warmup: true
     handler: application/handlers/balance_handler.get_token_balance
     role: ${file(./config.${self:provider.stage}.json):ROLE}
-    vpc:
-      securityGroupIds:
-        - ${file(./config.${self:provider.stage}.json):SG1}
-        - ${file(./config.${self:provider.stage}.json):SG2}
-      subnetIds:
-        - ${file(./config.${self:provider.stage}.json):VPC1}
-        - ${file(./config.${self:provider.stage}.json):VPC2}
+    vpc: ${self:custom.defaultVpc}
     events:
       - http:
           path: /get-token-balance
           method: post
-          cors:
-            origin: ${file(./config.${self:provider.stage}.json):ORIGIN}
-            headers:
-              - Content-Type
-              - X-Amz-Date
-              - Authorization
-              - X-Api-Key
-              - X-Amz-Security-Token
-              - X-Amz-User-Agent
-              - x-requested-with
+          cors: ${self:custom.defaultCors}
           documentation:
             summary: "Get token balance"
             description: "Get token balance from the snapshot"
@@ -127,27 +134,12 @@ functions:
     warmup: true
     handler: application/handlers/customer_handler.submit_question
     role: ${file(./config.${self:provider.stage}.json):ROLE}
-    vpc:
-      securityGroupIds:
-        - ${file(./config.${self:provider.stage}.json):SG1}
-        - ${file(./config.${self:provider.stage}.json):SG2}
-      subnetIds:
-        - ${file(./config.${self:provider.stage}.json):VPC1}
-        - ${file(./config.${self:provider.stage}.json):VPC2}
+    vpc: ${self:custom.defaultVpc}
     events:
       - http:
           path: /submit-question
           method: post
-          cors:
-            origin: ${file(./config.${self:provider.stage}.json):ORIGIN}
-            headers:
-              - Content-Type
-              - X-Amz-Date
-              - Authorization
-              - X-Api-Key
-              - X-Amz-Security-Token
-              - X-Amz-User-Agent
-              - x-requested-with
+          cors: ${self:custom.defaultCors}
           documentation:
             summary: "Submit user question"
             description: "Submit user question"
@@ -167,3 +159,15 @@ functions:
               - statusCode: "500"
                 responseModels:
                   "application/json": "ErrorMessage"
+
+  update_token_balance:
+    handler: application/handlers/balance_handler.update_token_balance
+    role: ${file(./config.${self:provider.stage}.json):ROLE}
+    vpc: ${self:custom.defaultVpc}
+    layers: ${self:custom.defaultLayers}
+    events:
+      - schedule:
+          rate: rate(10 minutes)
+          name: ${file(./config.${self:provider.stage}.json):ENVIRONMENT}-update-token-balance
+          description: 'Job for updating the token balance'
+          enabled: true
